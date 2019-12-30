@@ -1,0 +1,155 @@
+%=========================================================
+% USING THE REPRODUCING KERNEL COLLOCATION METHOD TO SOLVE 
+% THE 2D POISSONS PROBLEM
+%=========================================================
+clc
+clc
+close all 
+tic
+timerval = tic;
+
+%-------------------------
+%INPUT PARAMETERS
+%-------------------------
+marker_size = 60; % For scatter plot
+showPlot = true; %Plotting is done if true
+
+%Domain
+xdim1=0;
+xdim2=1;
+ydim1=0;
+ydim2=1;
+
+% No. of Source points in the each direction
+NS_x = 10; %No. of Source points in the x-direction
+dx_s = (xdim2-xdim1)/(NS_x-1);
+
+NS_y = 10; %No. of Source points in the y-direction
+dy_s = (ydim2-ydim1)/(NS_y-1);
+
+% No. of Collocation points in the each direction
+CP_x  = 20; %No. of Collocation points in the x-direction
+dx_c = (xdim2-xdim1)/(CP_x-1);
+
+CP_y  = 20; %No. of Collocation points in the y-direction
+DY_coll = (ydim2-ydim1)/(CP_y-1);
+
+
+%---------------------------------------------------
+%--------------------SOURCE POINTS------------------
+%---------------------------------------------------
+% Constructing the nodes in the x and y directions
+x_s = xdim1:dx_s:xdim2;
+y_s = ydim1:dy_s:ydim2;
+
+fprintf('Source points %d x %d\n',length(x_s),length(y_s));
+
+% Forming all the x,y coordinates of the Source points in the domain
+NP_s = length(x_s)*length(y_s); % Total number of points
+NS = zeros(NP_s,2);        
+int_1=1;
+for count_1 = 1:length(x_s)
+    for count_2 = 1:length(y_s)
+        NS(int_1,1) = NS(int_1,1)+ x_s(count_1);
+        NS(int_1,2) = NS(int_1,2)+ y_s(count_2);
+        int_1 = int_1+1;
+    end    
+end
+
+clear int_1 count_1 count_2
+
+%---------------------------------------------------------------------
+%--------------------COLLOCATION POINTS-------------------------------
+%---------------------------------------------------------------------
+% Nodal distance of collocation points
+dx_c = DX_coll;
+dy_c = DY_coll;
+x_c = xdim1:dx_c:xdim2;
+y_c = ydim1:dy_c:ydim2;
+
+fprintf('Collocation points %d x %d\n',length(x_c),length(y_c));
+
+% Forming all the x,y coordinates of the Collocation points in the domain
+NP_c = length(x_c)*length(y_c); % Total no. of Collocation points no_NI
+NC_total = zeros(NP_c,2);        
+int_1=1;
+for count_1 = 1:length(x_c)
+    x_var = x_c(count_1);
+    for count_2 = 1:length(y_c)
+        y_var = y_c(count_2);
+        NC_total(int_1,1) = NC_total(int_1,1)+ x_var;
+        NC_total(int_1,2) = NC_total(int_1,2)+ y_var;
+        int_1=int_1+1;
+    end    
+end
+NC_total;
+
+clear int_1 count_1 count_2 x_var y_var
+
+% Constructing the INTERIOR COLLOCATION POINTS NI_c
+NP_in = (length(x_c)-2)*(length(y_c)-2);
+NI_c = zeros(NP_in,2);
+%Constructing Nodes on the Essential Boundary
+NP_EB = (length(x_c)+length(y_c)+length(x_c)+length(y_c)-4);
+NEB = zeros(NP_EB,2);
+
+int_2=1;
+int_3 = 1;
+for int_1 = 1:NP_c % NP_c = Total no. of Collocation points no_NI
+    x_temp=NC_total(int_1,1);
+    y_temp=NC_total(int_1,2);
+    if (x_temp==xdim1 || x_temp==xdim2 || y_temp==ydim1 || y_temp==ydim2)
+        NEB(int_3,1) = NEB(int_3,1) + x_temp;
+        NEB(int_3,2) = NEB(int_3,2) + y_temp;
+        int_3=int_3+1;
+    else
+        NI_c(int_2,1)= NI_c(int_2,1) + x_temp;
+        NI_c(int_2,2)= NI_c(int_2,2) + y_temp;
+        int_2=int_2+1;
+    end
+end
+NI_c;
+fprintf('No. of Interior collocation points %d \n',size(NI_c,1));
+fprintf('No. of EB collocation points %d \n',size(NEB,1));
+
+clear int_1 int_2 int_3
+
+% FORMING THE COLLOCATION POINTS MATRIX AND PLOTTING
+NC = [NI_c;NEB];
+
+plot2 = figure(2); hold on %Collocation points
+legd = zeros(1,2);
+hold on
+legd(1,1)=scatter(NI_c(:,1),NI_c(:,2),marker_size,'b','filled');     
+legd(1,2)=scatter(NEB(:,1),NEB(:,2),marker_size,'b','filled');  
+
+xlabel('x','FontSize',20,'FontName','Times New Roman')
+ylabel('y','FontSize',20,'FontName','Times New Roman')
+% title('Collocation Points','FontSize',16)
+axis equal
+hold off
+% legend(legd,{'Interior','Essential boundary'})
+set(gca,'FontSize',16)
+saveas(plot2,'2','fig')
+set(gca,'FontName','Times New Roman')
+
+
+%-------------------------
+%PLOTTING
+%-------------------------
+if (showPlot == true)
+    
+    plot1 = figure(1); hold on %Source points
+    for int1 = 1:size(NS,1)
+        scatter(NS(int1,1),NS(int1,2),marker_size,'r','filled')    
+    end
+
+    xlabel('x','FontSize',20,'FontName','Times New Roman')
+    ylabel('y','FontSize',20,'FontName','Times New Roman')
+    title('Source Points','FontSize',16)
+    axis equal
+    hold off
+    set(gca,'FontSize',16)
+    set(gca,'FontName','Times New Roman')
+    
+end
