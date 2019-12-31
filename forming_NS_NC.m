@@ -1,4 +1,4 @@
-
+% Functions for creating the source and collocation points
 classdef forming_NS_NC
    methods(Static)
        
