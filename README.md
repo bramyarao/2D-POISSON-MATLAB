@@ -1,4 +1,4 @@
-# Solving the 2D Poissons problem
+# Solving the 2D Poissons problem (coding in MATLAB)
 ## This work is copyrighted.
 
 <p align="center">
