@@ -16,9 +16,9 @@
 
 \title{2D Poissons}
 \author{Ramya Rao Basava}
-\institute{Department of Computer Science, UBC}
+\institute{CS, UBC}
 %\date{\today}
-\date{}
+\date{} %no date
 
 
 \begin{document}
@@ -51,12 +51,28 @@
 
 Consider the 2D Poisson problem with essential boundary conditions as given
 below:
-\[ u(x,y) \]
+\begin{align*}
+\Delta u (x,y) &= (x^2+y^2)e^{xy} &\text{in} \quad \Omega = \{(x,y) \vert 0 < x < 1,0 < y < 1\} \\
+u (x,y) &= e^{xy} \quad &\text{on }  \partial\Omega = \{(x,y) \vert x=0,1 \text{ and } y=0,1\}
+\end{align*}
 
+The analytical solution to the problem is $u (x,y) = e^{xy}$. 
 \end{frame}
 
 
+%-----------------------------
+% Slide 2
+%-----------------------------
+\section{Numerical Analysis}
+\begin{frame}
 
+\frametitle{Numerical Analysis}
+The domain is discretized using $10\times10$ source points and  $40\times40$ collocation points which do not overlap. The weight on the essential boundary is taken to be $\sqrt{\alpha^g}=N_S$, where $N_S$ is the number of source points. 
+
+\vspace{8pt}
+The numerical solution using RKCM obtained along the diagonal line passing through the points $(0,0)$ and $(1,1)$ is plotted in figure below and compared with the analytical solution. The RKCM result is very close to the analytical solution.
+
+\end{frame}
 
 
 \end{document}
