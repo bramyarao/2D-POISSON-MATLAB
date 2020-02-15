@@ -1,7 +1,9 @@
 # Solving the 2D Poissons problem
 ## This work is copyrighted.
 
-<img width="600" align="center" src="2DComp.jpg" >
+<p align="center">
+<img width="600" src="2DComp.jpg">
+</p>
 
 <div style="text-align: justify"> 
 
@@ -13,7 +15,7 @@ The overview of the problem statement and results obtained is given in <a href="
 <br/>
 The coding and plotting is done in MATLAB. The Python version of the same problem is in the repository <a href="https://bramyarao.github.io/2D-POISSON-PYTHON/">2D-POISSON-PYTHON</a>.
 
- </div>
+</div>
  
 
 
