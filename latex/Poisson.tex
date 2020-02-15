@@ -1,54 +1,29 @@
-\documentclass[9pt]{beamer}
-% FOR HANDOUTS ONLY
-%\documentclass[handout]{beamer}
-%\usepackage{pgfpages}
-%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
-\usetheme{Madrid}
-\usecolortheme{wolverine}
-\usefonttheme{serif}
-%\useinnertheme{rectangles}
+\documentclass[11pt, letterpaper]{article}
+%\usepackage[showframe]{geometry}
+%\usepackage{layout}
+
+\setlength{\voffset}{-1.1in}
+\setlength{\headsep}{5pt}
+\setlength{\footskip}{20pt}
+\setlength{\textheight}{660pt}
+
 \usepackage{verbatim} % for comments
 \usepackage{mathtools}
-\usepackage{ragged2e} % For justifying text
-\newcommand\Myperm[2][^n]{\prescript{#1\mkern-2.5mu}{}P_{#2}} %Permutation
-\newcommand\Mycomb[2][^n]{\prescript{#1\mkern-0.5mu}{}C_{#2}} %Combination
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
 
+\title{\textbf{2D Poisson}}
+\author{Ramya Rao Basava\\
+Department of Computer Science\\
+University of British Columbia, Vancouver}
+\date{}
 
-\title{2D Poissons}
-\author{Ramya Rao Basava}
-\institute{CS, UBC}
-%\date{\today}
-\date{} %no date
+\begin{document}%\layout
+\maketitle
 
-
-\begin{document}
-
-%-----------------------------
-% TITLE PAGE
-%-----------------------------
-\begin{frame}
-\titlepage
-\end{frame}
-
-%-----------------------------
-% CONTENTS PAGE
-%-----------------------------
-\begin{frame}
-\label{contents}
-\frametitle{Contents}
-\tableofcontents
-\end{frame}
-
-%************************
 \section{Problem Statement}
-
-%-----------------------------
-% Slide 1
-%-----------------------------
-\begin{frame}
-
-\frametitle{Problem Statement}
-
 Consider the 2D Poisson problem with essential boundary conditions as given
 below:
 \begin{align*}
@@ -56,23 +31,89 @@ below:
 u (x,y) &= e^{xy} \quad &\text{on }  \partial\Omega = \{(x,y) \vert x=0,1 \text{ and } y=0,1\}
 \end{align*}
 
-The analytical solution to the problem is $u (x,y) = e^{xy}$. 
-\end{frame}
+The analytical solution to the problem is $u (x,y) = e^{xy}$.
 
-
-%-----------------------------
-% Slide 2
-%-----------------------------
 \section{Numerical Analysis}
-\begin{frame}
 
-\frametitle{Numerical Analysis}
-The domain is discretized using $10\times10$ source points and  $40\times40$ collocation points which do not overlap. The weight on the essential boundary is taken to be $\sqrt{\alpha^g}=N_S$, where $N_S$ is the number of source points. 
+The domain is discretized using $10\times10$ source points and  $40\times40$ collocation points which do not overlap as shown in Figure \ref{fig1}. 
 
-\vspace{8pt}
-The numerical solution using RKCM obtained along the diagonal line passing through the points $(0,0)$ and $(1,1)$ is plotted in figure below and compared with the analytical solution. The RKCM result is very close to the analytical solution.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/5.jpg}
+  \caption{Source points}
+  \label{fig1-1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/6.jpg}
+  \caption{Collocation points}
+  \label{fig1-2}
+\end{subfigure}
+\caption{Domain discretization}
+\label{fig1}
+\end{figure}
 
-\end{frame}
+The weight on the essential boundary is taken to be $\sqrt{\alpha^g}=N_S$, where $N_S$ is the number of source points. The numerical and analytical solutions in the 2D domain are compared in Figure \ref{fig2}.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/1.jpg}
+  \caption{Numerical}
+  \label{fig2-1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/2.jpg}
+  \caption{Analytical}
+  \label{fig2-2}
+\end{subfigure}
+\caption{Comparison of numerical and analytical solution in 2D domain}
+\label{fig2}
+\end{figure}
+
+Additionally, the numerical solution using RKCM obtained along the diagonal line passing through the points $(0,0)$ and $(1,1)$ is plotted in Figure \ref{fig3} and compared with the analytical solution. The error between the two solutions along this diagonal line is also plotted. 
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/3.jpg}
+  \caption{Solution comparison}
+  \label{fig3-1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=0.97\linewidth]{images/4.jpg}
+  \caption{Error}
+  \label{fig3-2}
+\end{subfigure}
+\caption{Comparison of numerical and analytical solution along the diagonal line}
+\label{fig3}
+\end{figure}
+
+
+
+It can be seen that the numerical RKCM result is very close to the analytical solution. 
+
+
+
 
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
