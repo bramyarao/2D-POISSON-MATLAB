@@ -1,5 +1,5 @@
-# This work is copyrighted.
-## Solving the 2D Poissons problem
+# Solving the 2D Poissons problem
+## This work is copyrighted.
 
 <div style="text-align: justify"> 
 
